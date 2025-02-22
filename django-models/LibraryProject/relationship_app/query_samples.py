@@ -23,7 +23,7 @@ def list_all_books(library_name):
 def librarian_for_library(library_name):
     try:
         library = Library.objects.get(name=library_name)
-        librarian = librarian.objects.get(library=library)
+        librarian = Librarian.objects.get(library=library)
         return librarian.name
     except Library.DoesNotExist:
         return f"Librarian for {library_name} not found"
