@@ -9,7 +9,9 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 #user login
 from django.contrib.auth import login, logout, authenticate
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
 
 
 #1. Setting up template views
@@ -29,6 +31,7 @@ class LibraryDetailView(DetailView):
         context = super().get_context_data(**kwargs) #get default context data
         return context
 
+########################################
 #2: Setting up user authentication views
 # User Registration
 """
@@ -70,10 +73,8 @@ def user_logout(request):
     logout(request)
     return render(request, "relationship_app/logout.html")
 
-#Task 4: CREATING ROLE-BASED VIEWS
-#from django.shortcuts import render
-from django.contrib.auth.decorators import user_passes_test
-
+##################################
+#Task 3: CREATING ROLE-BASED VIEWS
 # Helper function to check roles
 def is_admin(user):
     return user.userprofile.role == "Admin"
@@ -98,3 +99,42 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, "relationship_app/member_view.html")
+
+##################################################
+#TASK 4. IMPLEMENTING CUSTOM PERMISSIONS IN DJANGO
+# Add a Book (without Django forms)
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        author = request.POST.get("author")        
+
+        if title and author:
+            Book.objects.create(title=title, author=author)
+            return redirect("book-list")
+
+    return render(request, "relationship_app/book_form.html")  # Template for adding/editing books
+
+# Edit a Book (without Django forms)
+@permission_required('relationship_app.can_change_book', raise_exception=True)
+def edit_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    
+    if request.method == "POST":
+        book.title = request.POST.get("title", book.title)
+        book.author = request.POST.get("author", book.author)        
+        book.save()
+        return redirect("book-list")
+
+    return render(request, "relationship_app/book_form.html", {"book": book})
+
+# Delete a Book (without Django forms)
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    
+    if request.method == "POST":
+        book.delete()
+        return redirect("book-list")
+
+    return render(request, "relationship_app/confirm_delete.html", {"book": book})
