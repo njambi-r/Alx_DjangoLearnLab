@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from .models import Book
 from .models import Library
 from django.views.generic.detail import DetailView
-
 #user registration
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+#user login
+from django.contrib.auth import login
+
 
 #1. Setting up template views
 # Create your views here.
