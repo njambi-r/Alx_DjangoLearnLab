@@ -6,13 +6,13 @@ from django.views.generic.detail import DetailView
 
 # Create your views here.
 #function-based view
-def book_list(request):
+def list_books(request):
     books = Book.objects.all()
     context = {"books": books}
     return render (request, 'relationship_app/list_books.html', context)
 
 #class-based view
-class library_book_view(DetailView):
+class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
 
