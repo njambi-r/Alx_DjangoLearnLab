@@ -2,7 +2,7 @@ from django.urls import path
 from .views import list_books, LibraryDetailView
 from django.contrib.auth.views import LoginView #login view
 from django.contrib.auth.views import LogoutView #logout view
-from .views import SignUpView
+from . import views
 
 
 app_name = "relationship_app"
@@ -12,5 +12,5 @@ urlpatterns = [
     path("library/<int:pk>/", LibraryDetailView.as_view(), name="library-book-detail"),  # Class-Based View
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'), #login
     path("logout/", LogoutView.as_view(template_name="registration/logout.html"), name="logout"),#logout
-    path("register/", register, name="register"),  # Use function-based register
+    path("register/", views.register, name="register"),  # Explicitly include views.register
 ]
