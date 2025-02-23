@@ -51,7 +51,7 @@ def register(request):
             return redirect("login")  # Redirect to login after successful registration
     else:
         form = UserCreationForm()
-    return render(request, "registration/signup.html", {"form": form})
+    return render(request, "relationship_app/register.html", {"form": form})
 
 #login
 def user_login(request):
