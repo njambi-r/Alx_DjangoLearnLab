@@ -142,3 +142,15 @@ INSTALLED_APPS += ['csp']
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_SCRIPT_SRC = ("'self'", "https://trusted-scripts.com")  # Only load scripts from trusted sources
 CSP_STYLE_SRC = ("'self'", "https://trusted-styles.com")
+
+# ------------------------------------------
+#Implementing HTTPS and secure redirects in django
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  # Ensures all HTTP traffic is redirected to HTTPS
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # Instructs browsers to only use HTTPS for the next 1 year (31536000 seconds). (Recommended)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Ensures that all subdomains follow the same security rule.
+SECURE_HSTS_PRELOAD = True  # Allows the site to be preloaded into browsers' HSTS lists
+
