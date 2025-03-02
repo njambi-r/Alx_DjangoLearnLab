@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-sy+$xn)!y@j^+wf*1o1*^wyu-x248w+w0krgd_jed0_j_@drte'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -126,3 +126,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'  # points to the custom user model
 
+#Adding security headers
+SECURE_BROWSER_XSS_FILTER = True  # Protect against XSS attacks
+X_FRAME_OPTIONS = 'DENY'  # Prevent clickjacking attacks
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevent MIME type sniffing
+
+#Secure cookies
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are only sent over HTTPS
+
+#Implementing Content Security Policy (CSP)
+# settings.py
+INSTALLED_APPS += ['csp']
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "https://trusted-scripts.com")  # Only load scripts from trusted sources
+CSP_STYLE_SRC = ("'self'", "https://trusted-styles.com")
