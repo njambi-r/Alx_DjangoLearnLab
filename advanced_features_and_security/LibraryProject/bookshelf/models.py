@@ -7,11 +7,23 @@ class Book (models.Model):
     author = models.CharField(max_length = 100)
     publication_year = models.IntegerField()
 
+    #adding the custom permissions
+    class Meta:
+          permissions = [
+                ("can_view", "Can view book"),
+                ("can_create", "Can create book"),
+                ("can_edit", "Can edit book"),
+                ("can_delete", "Can delete book"),
+          ]
+
+    def __str__(self):
+         return self.title
+
 #Defining a custom user model
 #Ref:https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#writing-a-manager-for-a-custom-user-model
 
 #creating a custom user manager
-class CustomUserManager(BaseUserManager):
+class CustomUserManager (BaseUserManager):
     def create_user(self, username, email, password=None, date_of_birth=None, profile_photo=None, **other_fields ):
                 #assuming that in our case, email is essential
                 if not email:
@@ -37,13 +49,13 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 #creating a custom user model
-class CustomUser(AbstractUser):
+class CustomUser (AbstractUser):
     date_of_birth =  models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photo/',null=True, blank=True)
 
     #replace the default user manager with the custom methodes for
     #create_user and create_superuser that we defined in CustomUserManager()
-    objects=CustomUserManager() 
+    objects = CustomUserManager() 
     def __str__(self):
          return self.username
     #string representation defines how users will appear in Django admin
