@@ -5,7 +5,8 @@ from .models import Book
 from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
-from .forms import BookForm, ExampleForm
+from .forms import BookForm
+from .forms import ExampleForm
 
 # Create your views here.
 
