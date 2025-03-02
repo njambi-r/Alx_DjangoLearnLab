@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import view_book, create_book, edit_book, delete_book
+from .views import view_book, create_book, edit_book, delete_book, example_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -8,6 +8,7 @@ urlpatterns = [
     path('books/create/', create_book, name='create_book'),
     path('books/<int:book_id>/edit/', edit_book, name='edit_book'),
     path('books/<int:book_id>/delete/', delete_book, name='delete_book'),
+    path('example/', example_view, name='example_form'),
 
     # Authentication URLs (if needed)
     path('login/', auth_views.LoginView.as_view(), name='login'),

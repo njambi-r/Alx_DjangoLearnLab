@@ -5,6 +5,7 @@ from .models import Book
 from django.contrib.auth.decorators import permission_required, login_required
 from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseForbidden
+from .forms import BookForm, ExampleForm
 
 # Create your views here.
 
@@ -107,3 +108,35 @@ def delete_book(request, book_id):
         return redirect('book_list')
 
     return render(request, 'book_confirm_delete.html', {'book': book})
+
+#-------------------------
+#Securely add books using Django Forms
+
+def add_book(request):
+    """
+    View for adding a book securely using Django forms.
+    Prevents SQL injection by using Django ORM.
+    """
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()  # Securely saves data
+            return redirect('book_list')  # Redirects to the book list page
+    else:
+        form = BookForm()
+
+    return render(request, "bookshelf/form_example.html", {"form": form})
+
+def example_view(request):
+    """
+    Example view demonstrating secure form handling.
+    """
+    if request.method == "POST":
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the valid form data (e.g., save to DB or send an email)
+            return render(request, "bookshelf/example_success.html")  # Redirect or show success page
+    else:
+        form = ExampleForm()
+
+    return render(request, "bookshelf/example_form.html", {"form": form})
