@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser, BaseUserManager
 
 # Create your models here.
-class Book (models.Model):
+class Book(models.Model):
     title = models.CharField(max_length = 200)
     author = models.CharField(max_length = 100)
     publication_year = models.IntegerField()
@@ -23,7 +23,7 @@ class Book (models.Model):
 #Ref:https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#writing-a-manager-for-a-custom-user-model
 
 #creating a custom user manager
-class CustomUserManager (BaseUserManager):
+class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, date_of_birth=None, profile_photo=None, **other_fields ):
                 #assuming that in our case, email is essential
                 if not email:
@@ -49,7 +49,7 @@ class CustomUserManager (BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 #creating a custom user model
-class CustomUser (AbstractUser):
+class CustomUser(AbstractUser):
     date_of_birth =  models.DateField(null=True, blank=True)
     profile_photo = models.ImageField(upload_to='profile_photo/',null=True, blank=True)
 
