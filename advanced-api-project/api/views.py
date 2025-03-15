@@ -7,7 +7,7 @@ from rest_framework.generics import (ListAPIView,
                                      DestroyAPIView,
                                      )
 from .models import Book, Author
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 
