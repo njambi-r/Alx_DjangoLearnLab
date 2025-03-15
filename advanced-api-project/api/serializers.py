@@ -12,7 +12,7 @@ class BookSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['publication_year'] > datetime.datetime.now().year:
             raise serializers.ValidationError("Publication year cannot be in the future")
-        return data['publication_year']
+        return data
     
 class AuthorSerializer(serializers.ModelSerializer):
     # Nested BookSerializer to show the author along with their related books
