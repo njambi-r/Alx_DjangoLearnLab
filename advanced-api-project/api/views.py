@@ -12,6 +12,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from django_filters import rest_framework
 from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 # Create your views here.
 # Generic views on book model to handle CRUD operations
@@ -25,6 +26,9 @@ class ListView(ListAPIView):
     # Setting up filtering options
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['title', 'author', 'publication_year']
+    # Setting up search
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title']
 
 # Retrieve a single book
 class DetailView(RetrieveAPIView):
