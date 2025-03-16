@@ -29,6 +29,9 @@ class ListView(ListAPIView):
     # Setting up search
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
+    #Configure ordering
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['title', 'publication_year']
 
 # Retrieve a single book
 class DetailView(RetrieveAPIView):
