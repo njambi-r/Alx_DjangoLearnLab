@@ -35,19 +35,19 @@ class Book(TestCase):
     def test_create_book(self):
         data = {"title": "A Man of the People", "publication_year": 1963, "author": self.author.id}
         response = self.client.post("/api/books/create/", data=json.dumps(data), content_type="application/json")
-        print("Response:", response.json())  # Print error details
+        print("Response:", response.data)  # Print error details
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     # Update book
     def test_update_book(self):
         data = {"title": "A New Earth", "publication_year": 1963, "author": self.author.id}
         response = self.client.put("/api/books/update/1/", data=json.dumps(data), content_type="application/json")
-        print("Response:", response.json())  # Print error details
+        print("Response:", response.data)  # Print error details
         self.assertEqual(response.status_code, status.HTTP_200_OK)    
 
     # Delete book
     def test_delete_book(self):
         #data = {"title": "A New Earth", "publication_year": 1963, "author": self.author.id}
         response = self.client.delete("/api/books/delete/1/")
-        print("Response:", response.json())  # Print error details
+        print("Response:", response.data)  # Print error details
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT) 
