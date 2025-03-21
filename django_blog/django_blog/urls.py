@@ -29,10 +29,10 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),  
 
     # Custom authentication-related views
-    path("accounts/register/", include("blog.urls")),  # Register and profile are in blog.urls
+    path("accounts/", include("blog.urls")),  # Register and profile are in blog.urls
 
     # Explicit login/logout URLs (optional, but avoid duplication)
-    path("accounts/login/", auth_views.LoginView.as_view(template_name="registration/login.html")),
+    #path("accounts/login/", auth_views.LoginView.as_view(template_name="registration/login.html")),
     #path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
 
     # Home page
