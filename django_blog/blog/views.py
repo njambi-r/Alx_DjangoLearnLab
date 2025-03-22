@@ -105,7 +105,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # Allow authenticated users to post new comments 
 @login_required #only authenticated users can add comments
-def CommentAddView(request, post_id):
+def CommentCreateView(request, post_id):
     post = get_object_or_404(Post, id=post_id) #retrieve blog post to be associated with comment, if it does not exist, return 404 error
     if request.method == "POST": #form submitted via post, meaning user is trying to create a new comment
         form = CommentForm(request.POST)

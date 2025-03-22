@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
-from .views import CommentAddView, CommentDeleteView, CommentUpdateView
+from .views import CommentCreateView, CommentDeleteView, CommentUpdateView
 
 urlpatterns = [
    path("register/", views.RegistrationView.as_view(), name="register"),  
@@ -24,7 +24,7 @@ urlpatterns += [
 
 #adding comments views
 urlpatterns += [
-    path("posts/<int:post_id>/comments/new/", CommentAddView, name="add_comment"),
+    path("posts/<int:post_id>/comments/new/", CommentCreateView, name="add_comment"),
     path("comments/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
     path("comments/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 ]
