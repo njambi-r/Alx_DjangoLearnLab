@@ -1,6 +1,8 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
+from .views import CommentAddView, CommentDeleteView, CommentUpdateView
 
 urlpatterns = [
    path("register/", views.RegistrationView.as_view(), name="register"),  
@@ -12,11 +14,17 @@ urlpatterns = [
 ]
 
 # Connecting class-based views to allow CRUD actions
-from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
 urlpatterns += [
     path("post/", PostListView.as_view(), name="post-list"),
     path("post/new/", PostCreateView.as_view(), name="post-create"),
     path("post/<int:pk>/", PostDetailView.as_view(), name="post-detail"),
     path("post/<int:pk>/update/", PostUpdateView.as_view(), name="post-update"),
     path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
+]
+
+#adding comments views
+urlpatterns += [
+    path("posts/<int:post_id>/comments/new/", CommentAddView, name="add_comment"),
+    path("comments/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
+    path("comments/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 ]

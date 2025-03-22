@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 #Forms
 from django.forms import ModelForm
-from .models import Post
+from .models import Post, Comment
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -36,4 +36,20 @@ def clean_title(self):
     if len(title) < 200:
         raise forms.ValidationError("The title cannot exceed 200 characers")
     return title
+
+#Create comment form
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content'] #Because all other fields don't require user input
+
+    # Validate content field to ensure no blank comments
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        if len(content) == 0:
+            raise forms.ValidationError('Cannot post blank comment')
+        return content
+
+
+
 
