@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
 #Forms
+from django import forms
 from django.forms import ModelForm
 from .models import Post, Comment
 
@@ -38,7 +39,7 @@ def clean_title(self):
     return title
 
 #Create comment form
-class CommentForm(ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content'] #Because all other fields don't require user input
