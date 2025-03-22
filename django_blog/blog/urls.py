@@ -24,7 +24,7 @@ urlpatterns += [
 
 #adding comments views
 urlpatterns += [
-    path("post/<int:post_id>/comments/new/", CommentCreateView, name="add_comment"),
+    path("post/<int:pk>/comments/new/", CommentCreateView, name="add_comment"),
     path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
     path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
 ]
