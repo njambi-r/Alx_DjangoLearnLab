@@ -5,6 +5,8 @@ from .models import Profile
 from django import forms
 from django.forms import ModelForm
 from .models import Post, Comment
+#tags
+from taggit.forms import TagWidget #import tag widget
 
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
@@ -30,6 +32,9 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ["title", "content", "author", "tags"] #Tags field added
+        widgets = {
+            'tag': TagWidget(attrs={'class': 'form-control'}),  # Custom widget for tags
+        }
 
 # Validate title
 def clean_title(self):
