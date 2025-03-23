@@ -33,7 +33,7 @@ class PostForm(ModelForm):
         model = Post
         fields = ["title", "content", "author", "tags"] #Tags field added
         widgets = {
-            'tag': TagWidget(attrs={'class': 'form-control'}),  # Custom widget for tags
+            'tags': TagWidget(),  # Custom widget for tags
         }
 
 # Validate title
