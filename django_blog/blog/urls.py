@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
 from .views import CommentCreateView, CommentDeleteView, CommentUpdateView
+from .views import SearchResultsView
 
 urlpatterns = [
    path("register/", views.RegistrationView.as_view(), name="register"),  
@@ -27,4 +28,9 @@ urlpatterns += [
     path("post/<int:pk>/comments/new/", CommentCreateView, name="add_comment"),
     path("comment/<int:pk>/update/", CommentUpdateView.as_view(), name="comment_update"),
     path("comment/<int:pk>/delete/", CommentDeleteView.as_view(), name="comment_delete"),
+]
+
+# Adding search functionality
+urlpatterns += [
+    path("search/", SearchResultsView.as_view(), name="search_results"),
 ]

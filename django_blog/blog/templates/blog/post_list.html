@@ -2,6 +2,14 @@
 {% block content %}
     <h2>All Posts</h2>
     {% for post in posts %}
+
+    <!-- Search Form -->
+    <form method="GET" action="{% url 'post-search' %}">
+        <input type="text" name="q" placeholder="Search posts..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
         <h3><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h3>
         <p>{{ post.content|truncatewords:20 }}</p>
         <small>By {{ post.author }} on {{ post.created_at }}</small>
@@ -13,3 +21,4 @@
     {% endfor %}
     <a href="{% url 'post-create' %}">Create a New Post</a>
 {% endblock %}
+

@@ -29,7 +29,7 @@ automatically set author based on the logged-in user.
 class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "content", "author"]
+        fields = ["title", "content", "author", "tags"] #Tags field added
 
 # Validate title
 def clean_title(self):

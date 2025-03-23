@@ -15,6 +15,9 @@ from .forms import PostForm
 from .models import Comment
 from .forms import CommentForm
 
+# Adding search functionality
+from django.db.models import Q
+
 # Home page view
 def home(request):
     return render(request, "blog/home.html")
@@ -152,3 +155,21 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author
+
+#Implement search functionality
+class SearchResultsView(ListView):
+    """Search blog posts based on title, content, or tags"""
+    model = Post
+    template_name = "blog/search_results.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")  # Get search query from request
+        if query:
+            return Post.objects.filter(
+                Q(title__icontains=query) |  
+                Q(content__icontains=query) |  
+                Q(tag__name__icontains=query)  
+            ).distinct()  # Avoid duplicate results
+        return Post.objects.none()  # Return empty QuerySet if no search query
+
