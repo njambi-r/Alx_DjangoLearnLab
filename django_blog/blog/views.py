@@ -169,7 +169,7 @@ class SearchResultsView(ListView):
             return Post.objects.filter(
                 Q(title__icontains=query) |  
                 Q(content__icontains=query) |  
-                Q(tag__name__icontains=query)  
+                Q(tags__name__icontains=query)  
             ).distinct()  # Avoid duplicate results
         return Post.objects.none()  # Return empty QuerySet if no search query
 
