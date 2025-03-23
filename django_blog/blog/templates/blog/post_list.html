@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
     <h2>All Posts</h2>
-    {% for post in posts %}
 
-    <!-- Search Form -->
+    <!-- Search Form (Added) -->
     <form method="GET" action="{% url 'post-search' %}">
-        <input type="text" name="q" placeholder="Search posts..." value="{{ request.GET.q }}">
+        <input type="text" name="q" placeholder="Search posts..." />
         <button type="submit">Search</button>
     </form>
+    <!-- End of Search Form -->
 
-    <hr>
+    {% for post in posts %}
         <h3><a href="{% url 'post-detail' post.pk %}">{{ post.title }}</a></h3>
         <p>{{ post.content|truncatewords:20 }}</p>
         <small>By {{ post.author }} on {{ post.created_at }}</small>
+
+        <!-- Display post tags with links (Added) -->
+        <p>Tags: 
+            {% for tag in post.tag.all %}
+                <a href="{% url 'post-by-tag' tag.slug %}">#{{ tag.name }}</a>
+            {% endfor %}
+        </p>
+        <!-- End of Tag Display -->
+
         {% if user == post.author %}
             <a href="{% url 'post-update' post.pk %}">Edit</a> |
             <a href="{% url 'post-delete' post.pk %}">Delete</a>
         {% endif %}
         <hr>
     {% endfor %}
+    
     <a href="{% url 'post-create' %}">Create a New Post</a>
 {% endblock %}
-

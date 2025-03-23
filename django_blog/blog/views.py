@@ -17,6 +17,7 @@ from .forms import CommentForm
 
 # Adding search functionality
 from django.db.models import Q
+from taggit.models import Tag  # Import Tag model
 
 # Home page view
 def home(request):
@@ -173,3 +174,18 @@ class SearchResultsView(ListView):
             ).distinct()  # Avoid duplicate results
         return Post.objects.none()  # Return empty QuerySet if no search query
 
+# Search by tag
+class PostByTagListView(ListView):
+    model = Post
+    template_name = "blog/post_list.html"  # Reuse the existing template
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        tag_slug = self.kwargs.get("tag_slug")
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        return Post.objects.filter(tag__in=[tag])  # Filter posts by tag
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tag"] = get_object_or_404(Tag, slug=self.kwargs.get("tag_slug"))
+        return context

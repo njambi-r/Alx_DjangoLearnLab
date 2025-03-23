@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 from .views import PostListView, PostCreateView, PostDetailView, PostUpdateView, PostDeleteView
 from .views import CommentCreateView, CommentDeleteView, CommentUpdateView
-from .views import SearchResultsView
+from .views import SearchResultsView, PostByTagListView
 
 urlpatterns = [
    path("register/", views.RegistrationView.as_view(), name="register"),  
@@ -33,4 +33,5 @@ urlpatterns += [
 # Adding search functionality
 urlpatterns += [
     path("search/", SearchResultsView.as_view(), name="search_results"),
+    path('tags/<slug:tag_slug>/', PostByTagListView.as_view(), name='post-by-tag'),
 ]
