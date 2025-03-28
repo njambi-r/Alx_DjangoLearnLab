@@ -12,7 +12,7 @@ the custom user model if one is specified, or User otherwise.
 #User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
     class Meta:
         model = get_user_model()
         fields = ['username','password','email','bio','profile_picture','followers']
@@ -21,7 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
 # serializer for user registration
 class RegisterSerializer(serializers.ModelSerializer):
     # Ensures that the password is treated as a string and is write-only (not included in responses)
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
 
     class Meta:
         model = get_user_model()
