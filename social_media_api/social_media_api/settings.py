@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'accounts',
+    'accounts', #app
+    'posts', #app
     'rest_framework.authtoken', #to create the token model
 ]
 
