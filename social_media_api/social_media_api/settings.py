@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'accounts', #app
     'posts', #app
     'rest_framework.authtoken', #to create the token model
+    'django_filters', #supports customizable field filtering
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,8 @@ REST_FRAMEWORK = {
     ]
 }
 
+# https://www.django-rest-framework.org/api-guide/pagination/#pagination:~:text=to%20None.-,Setting%20the%20pagination%20style,-The%20pagination%20style
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 15
+}

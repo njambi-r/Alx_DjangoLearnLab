@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
+from rest_framework import generics
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 # Create your views here.
 # using REST framework viewsets which encapsulate the logic for common CRUD operations on models
@@ -11,6 +14,12 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    """Add filtering"""
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['title', 'content']
+    """Add search"""
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'content']    
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
