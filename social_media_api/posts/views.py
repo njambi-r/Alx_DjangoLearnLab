@@ -2,13 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework import viewsets, permissions
-from django.contrib.auth import get_user_model
+from .models import Post, Comment
 
 # Create your views here.
 # using REST framework viewsets which encapsulate the logic for common CRUD operations on models
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = get_user_model().objects.all()
+    queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
@@ -16,7 +16,7 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 class CommentViewSet(viewsets.ModelViewSet):
-    queryset = get_user_model().objects.all()
+    queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     """
