@@ -3,9 +3,12 @@ from django.contrib.auth.models import User
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework import viewsets, permissions
 from .models import Post, Comment
-from rest_framework import generics
+from rest_framework import generics, status
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
 
 # Create your views here.
 # using REST framework viewsets which encapsulate the logic for common CRUD operations on models
@@ -41,3 +44,4 @@ class CommentViewSet(viewsets.ModelViewSet):
     perform_create is used when you want to supply 
     extra data before save (like serializer.save(owner=self.request.user) 
     """
+    
