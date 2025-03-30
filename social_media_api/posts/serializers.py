@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post, Comment
+from .models import Post, Comment, Like
 
 class PostSerializer(serializers.ModelSerializer):
     # display the username instead of the id of the author
@@ -40,5 +40,10 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only_fields = ['author','created_at','updated_at']
         # post not included to allow a user to create a comment with a specific post
         
-
+class LikeSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(source='user.username')
+    
+    class Meta: 
+        model = Like
+        fields = '__all__'
     

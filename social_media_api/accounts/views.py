@@ -5,10 +5,13 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework import generics, permissions, status
 from rest_framework.authentication import TokenAuthentication
+
+import notifications.models
 from .serializers import UserSerializer, RegisterSerializer
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from .models import CustomUser
+from notifications.models import Notification
 
 User = get_user_model()
 
@@ -58,9 +61,22 @@ class FollowUserView(generics.GenericAPIView):
 
         if request.user == user_to_follow:
             return Response({'error': 'You cannot follow yourself.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        #prevent duplicate follows
+        if request.user.following.filter(id=user_to_follow.id).exists():
+            return Response({'message': 'You are already following this user.'}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.following.add(user_to_follow)
+            
+        # Create notification for the user followed
+        Notification.objects.create(
+            recipient = user_to_follow,
+            actor = request.user,
+            verb = "started following you",
+            target = user_to_follow
+        )
         return Response({'message': f'You are now following {user_to_follow.username}.'}, status=status.HTTP_200_OK)
+
 
 class UnfollowUserView(generics.GenericAPIView):
     """unfollow a user"""

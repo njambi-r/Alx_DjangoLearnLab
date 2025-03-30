@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts', #app
     'posts', #app
+    'notifications', #app
     'rest_framework.authtoken', #to create the token model
     'django_filters', #supports customizable field filtering
     'drf_yasg', # interactive Swagger documentation

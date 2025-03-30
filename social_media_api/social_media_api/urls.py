@@ -6,6 +6,7 @@ urlpatterns = [
     path('api/', include('accounts.urls')), # user authentication
     path('api-auth/', include('rest_framework.urls')),  # Optional: Browsable API login/logout
     path('api/', include('posts.urls')),  # Posts & comments API
+    path('api/', include('notifications.urls')),
 ]
 
 
