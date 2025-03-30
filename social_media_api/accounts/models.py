@@ -6,7 +6,8 @@ from django.contrib.auth.models import AbstractUser
 class CustomUser(AbstractUser):
     bio = models.TextField(blank = True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    followers = models.ManyToManyField("self", symmetrical=False, related_name='following')
+    followers = models.ManyToManyField("self", symmetrical=False, related_name='following_users')
+    following = models.ManyToManyField("self", symmetrical=False, related_name='followers_users')
     """
     https://docs.djangoproject.com/en/5.1/ref/models/fields/#django.db.models.ManyToManyField.symmetrical:~:text=ManyToManyField.symmetrical
     ManyToManyField.symmetrical is used to define many to many relationship 
