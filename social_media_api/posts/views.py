@@ -73,12 +73,12 @@ class LikePostView(APIView):
     authentication_classes = [TokenAuthentication]
 
     def post(self, request, pk):
-        post = get_object_or_404(Post, pk=pk) # Ensure the post exists
+        post = generics.get_object_or_404(Post, pk=pk) # Ensure the post exists
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
         if created:
             Notification.objects.create(
-                recipent=post.author,
+                recipient=post.author,
                 actor=request.user,
                 verb="liked your post",
                 target=post
