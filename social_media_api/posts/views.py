@@ -9,6 +9,7 @@ from rest_framework import filters
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
 
 # Create your views here.
 # using REST framework viewsets which encapsulate the logic for common CRUD operations on models
@@ -44,4 +45,15 @@ class CommentViewSet(viewsets.ModelViewSet):
     perform_create is used when you want to supply 
     extra data before save (like serializer.save(owner=self.request.user) 
     """
-    
+
+# Feed functionality
+class UserFeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+    """get posts by followed users"""
+    def get_queryset(self):
+        following_users = self.request.user.following.all() #retrive all users the authenticated user follows
+        return Post.objects.filter(author__in=following_users).order_by('-created_at') #retrieves posts by followed users and orders them by the most recent first
+        
