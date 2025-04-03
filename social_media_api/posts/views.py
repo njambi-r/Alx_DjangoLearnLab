@@ -20,16 +20,15 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    """Add filtering"""
-    filter_backends = [DjangoFilterBackend]
+    """Add filtering and search"""
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['title', 'content']
-    """Add search"""
-    filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'content']    
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+# Comment CRUD functionality
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -73,7 +72,7 @@ class LikePostView(APIView):
     authentication_classes = [TokenAuthentication]
 
     def post(self, request, pk):
-        post = generics.get_object_or_404(Post, pk=pk) # Ensure the post exists
+        post = get_object_or_404(Post, pk=pk) # Ensure the post exists
         like, created = Like.objects.get_or_create(user=request.user, post=post)
 
         if created:

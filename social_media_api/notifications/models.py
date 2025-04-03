@@ -12,6 +12,7 @@ class Notification(models.Model):
     object_id = models.PositiveIntegerField()
     target = GenericForeignKey("content_type", "object_id")
     timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 """
 https://docs.djangoproject.com/en/5.1/ref/contrib/contenttypes/#django.contrib.contenttypes.fields.GenericForeignKey 
 ContentType allows your model to effectively tie itself to another model class

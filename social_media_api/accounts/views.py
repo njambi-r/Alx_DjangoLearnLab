@@ -52,7 +52,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 """üsing CustomUser only because the cheker demands it"""
 """follow a user"""
 class FollowUserView(generics.GenericAPIView):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
@@ -80,7 +80,7 @@ class FollowUserView(generics.GenericAPIView):
 
 class UnfollowUserView(generics.GenericAPIView):
     """unfollow a user"""
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
@@ -95,7 +95,7 @@ class UnfollowUserView(generics.GenericAPIView):
 
 class IsFollowingView(generics.GenericAPIView):
     """check if the authenticated user is following another user"""
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
